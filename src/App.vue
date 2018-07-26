@@ -2,11 +2,9 @@
   <v-app>
     <v-navigation-drawer
       persistent
-      :mini-variant="miniVariant"
+      mobile-break-point="960"
       :clipped="clipped"
       v-model="drawer"
-      enable-resize-watcher
-      fixed
       app
     >
       <v-list>
@@ -26,71 +24,98 @@
     </v-navigation-drawer>
     <v-toolbar
       app
+      class="top-toolbar"
       :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>web</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>remove</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>menu</v-icon>
-      </v-btn>
+      <v-toolbar-title>Fujitsu Retail</v-toolbar-title>
     </v-toolbar>
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-tile @click="right = !right">
-          <v-list-tile-action>
-            <v-icon>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer>
+
+      <gmap-map
+      ref="map"
+      class="map"
+      :center="{lat:40, lng:-100}"
+      :zoom="6"
+      :options="{
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          position: google && google.maps.ControlPosition.RIGHT_CENTER,
+          mapTypeIds: ['roadmap', 'hybrid'],
+          style: google && google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+          },
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google && google.maps.ControlPosition.RIGHT_BOTTOM,
+        },
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+        minZoom: 3
+      }"
+      :style="{width: drawer ? 'calc(100% - 300px)': '100%'}"
+      >
+        <gmap-marker
+        v-for="marker in markers"
+        :key="marker.id"
+        :position="marker.position"
+        ></gmap-marker>
+      </gmap-map>
   </v-app>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import { gmapApi } from 'vue2-google-maps';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
   },
-  data () {
+  computed: {
+    google: gmapApi,
+  },
+  data() {
     return {
       clipped: false,
       drawer: true,
-      fixed: false,
       items: [{
         icon: 'bubble_chart',
-        title: 'Inspire'
+        title: 'Inspire',
       }],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
-}
+
+      markers: [{
+        id: 1,
+        position: {
+          lat: 40,
+          lng: -100,
+        },
+      },
+      ],
+    };
+  },
+  mounted() {
+    this.$refs.map.$mapPromise.then((map) => {
+      this.$store.commit('setMap', map);
+      // this.$store.dispatch('addLayer', 'clients');
+      // this.$store.dispatch('addLayer', 'stores');
+    });
+  },
+};
 </script>
+
+<style scoped>
+.map {
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  transition: width 0.2s ease-out;
+}
+
+.top-toolbar {
+  /* background-color: rgba(255, 255, 255, 0); */
+}
+</style>
