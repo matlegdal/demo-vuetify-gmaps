@@ -1,0 +1,2 @@
+# Convert all linebreak to unix/mac
+*.js text eol=lf
