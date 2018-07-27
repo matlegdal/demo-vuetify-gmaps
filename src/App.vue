@@ -21,6 +21,9 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <v-btn @click.stop="add">
+        Add
+      </v-btn>
     </v-navigation-drawer>
     <v-toolbar
       app
@@ -61,6 +64,7 @@
         <gmap-marker
         v-for="marker in markers"
         :key="marker.id"
+        :title="marker.name"
         :position="marker.position"
         ></gmap-marker>
       </gmap-map>
@@ -89,9 +93,18 @@ export default {
 
       markers: [{
         id: 1,
+        name: 'America center',
         position: {
           lat: 40,
           lng: -100,
+        },
+      },
+      {
+        id: 2,
+        name: 'whatever',
+        position: {
+          lat: 46,
+          lng: -71,
         },
       },
       ],
@@ -100,9 +113,21 @@ export default {
   mounted() {
     this.$refs.map.$mapPromise.then((map) => {
       this.$store.commit('setMap', map);
-      // this.$store.dispatch('addLayer', 'clients');
-      // this.$store.dispatch('addLayer', 'stores');
+      this.$store.dispatch('addLayer', 'clients');
+      this.$store.dispatch('addLayer', 'stores');
     });
+  },
+  methods: {
+    add() {
+      this.markers.push({
+        id: 3,
+        name: 'new',
+        position: {
+          lat: 44,
+          lng: -110,
+        },
+      });
+    },
   },
 };
 </script>
