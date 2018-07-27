@@ -6,7 +6,7 @@
     :options="{
       mapTypeControl: true,
       mapTypeControlOptions: {
-        position: google && google.maps.ControlPosition.RIGHT_CENTER,
+        position: google && google.maps.ControlPosition.RIGHT_TOP,
         mapTypeIds: ['roadmap', 'hybrid'],
         style: google && google.maps.MapTypeControlStyle.DROPDOWN_MENU,
       },

@@ -40,5 +40,8 @@ export default {
 
 .top-toolbar {
   background-color: rgba(255, 255, 255, 0);
+  width: 295px;
+  border: 0;
+  margin: 0;
 }
 </style>

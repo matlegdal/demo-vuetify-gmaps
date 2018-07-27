@@ -1,36 +1,12 @@
 <template>
   <v-navigation-drawer
-    v-model="sidebarIsOpen"
+    :value="sidebarIsOpen"
     clipped
     persistent
-    mobile-break-point="960"
     app
+    mobile-break-point="560"
+    class="sidebar"
   >
-    <v-list>
-      <v-list-tile
-        v-for="(item, i) in items"
-        :key="i"
-        value="true"
-      >
-        <v-list-tile-action>
-          <v-icon v-html="item.icon"/>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title v-text="item.title"/>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-    <v-btn
-      @click.stop="addMarker({
-        id: 3,
-        name: 'new',
-        position: {
-          lat: 44,
-          lng: -110,
-        },
-    })">
-      Add
-    </v-btn>
     <v-container>
       <app-add-location/>
     </v-container>
@@ -60,3 +36,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.sidebar {
+  box-shadow: 3px 4px 12px -1px rgba(0, 0, 0, 0.125);
+}
+</style>
