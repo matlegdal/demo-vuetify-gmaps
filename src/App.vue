@@ -1,93 +1,44 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      :clipped="clipped"
-      v-model="drawer"
-      persistent
-      mobile-break-point="960"
-      app
-    >
-      <v-list>
-        <v-list-tile
-          v-for="(item, i) in items"
-          :key="i"
-          value="true"
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"/>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"/>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-      <v-btn
-        @click.stop="addMarker({
-          id: 3,
-          name: 'new',
-          position: {
-            lat: 44,
-            lng: -110,
-          },
-      })">
-        Add
-      </v-btn>
-    </v-navigation-drawer>
+    <app-sidebar :sidebar-is-open="sidebarIsOpen" />
     <v-toolbar
-      :clipped-left="clipped"
+      clipped-left
       app
+      flat
+      floating
       class="top-toolbar"
     >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped">
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-toolbar-title>Fujitsu Retail</v-toolbar-title>
+      <v-toolbar-side-icon @click.stop="sidebarIsOpen = !sidebarIsOpen"/>
+      <v-toolbar-title>Fujitsu GeoAnalysis</v-toolbar-title>
     </v-toolbar>
 
-    <app-map :drawer="drawer" />
+    <app-map :sidebar-is-open="sidebarIsOpen" />
   </v-app>
 
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import Map from './components/Map.vue';
+import GMap from './components/Map.vue';
+import Sidebar from './components/Sidebar.vue';
 
 export default {
   name: 'App',
   components: {
-    'app-map': Map,
+    'app-map': GMap,
+    'app-sidebar': Sidebar,
   },
   data() {
     return {
-      clipped: false,
-      drawer: true,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire',
-      }],
+      sidebarIsOpen: true,
     };
-  },
-  methods: {
-    ...mapMutations([
-      'addMarker',
-    ]),
   },
 };
 </script>
 
 <style scoped>
-.map {
-  height: 100vh;
-  position: absolute;
-  right: 0;
-  transition: width 0.2s ease-out;
-}
+
 
 .top-toolbar {
-  /* background-color: rgba(255, 255, 255, 0); */
+  background-color: rgba(255, 255, 255, 0);
 }
 </style>

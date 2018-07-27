@@ -20,7 +20,7 @@
       fullscreenControl: false,
       minZoom: 3
     }"
-    :style="{width: drawer ? 'calc(100% - 300px)': '100%'}"
+    :style="{width: sidebarIsOpen ? 'calc(100% - 300px)': '100%'}"
     class="map"
   >
     <gmap-marker
@@ -39,7 +39,10 @@ import { gmapApi } from 'vue2-google-maps';
 export default {
   name: 'Map',
   props: {
-    drawer: { type: Boolean, required: true },
+    sidebarIsOpen: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     google: gmapApi,
@@ -58,3 +61,12 @@ export default {
 
 };
 </script>
+
+<style scoped>
+.map {
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  transition: width 0.2s ease-out;
+}
+</style>
