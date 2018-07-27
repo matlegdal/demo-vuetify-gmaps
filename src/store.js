@@ -8,8 +8,24 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    google: null,
     map: null,
+    markers: [{
+      id: 1,
+      name: 'America center',
+      position: {
+        lat: 40,
+        lng: -100,
+      },
+    },
+    {
+      id: 2,
+      name: 'whatever',
+      position: {
+        lat: 46,
+        lng: -71,
+      },
+    },
+    ],
     layers: new Map(),
     filters: new Map(),
     files: new Map(),
@@ -32,6 +48,9 @@ export default new Vuex.Store({
     },
     setLayer(state, { key, layer }) {
       state.layers.set(key, layer);
+    },
+    addMarker(state, marker) {
+      state.markers.push(marker);
     },
   },
   actions: {

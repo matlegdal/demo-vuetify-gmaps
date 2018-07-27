@@ -39,47 +39,18 @@
       <v-toolbar-title>Fujitsu Retail</v-toolbar-title>
     </v-toolbar>
 
-    <gmap-map
-      ref="map"
-      :center="{lat:40, lng:-100}"
-      :zoom="6"
-      :options="{
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          position: google && google.maps.ControlPosition.RIGHT_CENTER,
-          mapTypeIds: ['roadmap', 'hybrid'],
-          style: google && google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-          position: google && google.maps.ControlPosition.RIGHT_BOTTOM,
-        },
-        scaleControl: true,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false,
-        minZoom: 3
-      }"
-      :style="{width: drawer ? 'calc(100% - 300px)': '100%'}"
-      class="map"
-    >
-      <gmap-marker
-        v-for="marker in markers"
-        :key="marker.id"
-        :title="marker.name"
-        :position="marker.position"
-      />
-    </gmap-map>
+    <app-map :drawer="drawer" />
   </v-app>
 
 </template>
 
 <script>
-import { gmapApi } from 'vue2-google-maps';
+import Map from './components/Map.vue';
 
 export default {
   name: 'App',
   components: {
+    'app-map': Map,
   },
   data() {
     return {
@@ -89,39 +60,11 @@ export default {
         icon: 'bubble_chart',
         title: 'Inspire',
       }],
-
-      markers: [{
-        id: 1,
-        name: 'America center',
-        position: {
-          lat: 40,
-          lng: -100,
-        },
-      },
-      {
-        id: 2,
-        name: 'whatever',
-        position: {
-          lat: 46,
-          lng: -71,
-        },
-      },
-      ],
     };
-  },
-  computed: {
-    google: gmapApi,
-  },
-  mounted() {
-    this.$refs.map.$mapPromise.then((map) => {
-      this.$store.commit('setMap', map);
-      this.$store.dispatch('addLayer', 'clients');
-      this.$store.dispatch('addLayer', 'stores');
-    });
   },
   methods: {
     add() {
-      this.markers.push({
+      this.$store.commit('addMarker', {
         id: 3,
         name: 'new',
         position: {
