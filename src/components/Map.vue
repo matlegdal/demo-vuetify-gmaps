@@ -24,7 +24,7 @@
     class="map"
   >
     <gmap-marker
-      v-for="marker in this.$store.markers"
+      v-for="marker in markers"
       :key="marker.id"
       :title="marker.name"
       :position="marker.position"
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { gmapApi } from 'vue2-google-maps';
 
 export default {
@@ -42,6 +43,10 @@ export default {
   },
   computed: {
     google: gmapApi,
+    ...mapGetters([
+      'map',
+      'markers',
+    ]),
   },
   mounted() {
     this.$refs.map.$mapPromise.then((map) => {

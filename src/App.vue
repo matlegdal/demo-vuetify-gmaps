@@ -21,7 +21,15 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-btn @click.stop="add">
+      <v-btn
+        @click.stop="addMarker({
+          id: 3,
+          name: 'new',
+          position: {
+            lat: 44,
+            lng: -110,
+          },
+      })">
         Add
       </v-btn>
     </v-navigation-drawer>
@@ -45,6 +53,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import Map from './components/Map.vue';
 
 export default {
@@ -63,16 +72,9 @@ export default {
     };
   },
   methods: {
-    add() {
-      this.$store.commit('addMarker', {
-        id: 3,
-        name: 'new',
-        position: {
-          lat: 44,
-          lng: -110,
-        },
-      });
-    },
+    ...mapMutations([
+      'addMarker',
+    ]),
   },
 };
 </script>
