@@ -1,12 +1,16 @@
 <template>
     <v-toolbar
+
       clipped-left
       app
       flat
       floating
-      class="top-toolbar"
+      class="top-toolbar secondary--text"
     >
-      <v-toolbar-side-icon @click.stop="toggleSidebar"/>
+      <v-toolbar-side-icon 
+        @click.stop="toggleSidebar"
+        class="secondary--text"
+      />
       <v-toolbar-title>Fujitsu GeoAnalysis</v-toolbar-title>
     </v-toolbar>
 </template>
