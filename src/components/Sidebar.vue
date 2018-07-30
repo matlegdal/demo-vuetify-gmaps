@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import AddLocation from './AddLocation.vue';
 
 export default {
@@ -23,9 +23,9 @@ export default {
     'app-add-location': AddLocation,
   },
   computed: {
-    sidebarIsOpen() {
-      return this.$store.state.sidebarIsOpen;
-    }
+    ...mapGetters([
+      'sidebarIsOpen',
+    ])
   },
   methods: {
     ...mapMutations([

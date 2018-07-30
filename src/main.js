@@ -4,7 +4,7 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import * as env from './env';
 import './plugins/vuetify';
 import App from './App.vue';
-import store from './store';
+import store from './store/store';
 
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {

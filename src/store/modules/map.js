@@ -1,13 +1,7 @@
-/* global google */
-import Vue from 'vue';
-import Vuex from 'vuex';
-import * as api from './api';
+import * as api from '../../api';
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default {
   state: {
-    sidebarIsOpen: true,
     map: null,
     markers: [{
       id: 1,
@@ -33,13 +27,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setMap(state, map) {
-      this.state.map = map;
+      state.map = map;
     },
     addMarker(state, marker) {
-      this.state.markers.push(marker);
-    },
-    toggleSidebar(state) {
-      this.state.sidebarIsOpen = !state.sidebarIsOpen;
+      state.markers.push(marker);
     },
   },
   actions: {
@@ -59,4 +50,4 @@ export default new Vuex.Store({
       }
     },
   },
-});
+};

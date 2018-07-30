@@ -43,10 +43,8 @@ export default {
     ...mapGetters([
       'map',
       'markers',
+      'sidebarIsOpen',
     ]),
-    sidebarIsOpen() {
-      return this.$store.state.sidebarIsOpen;
-    },
   },
   mounted() {
     this.$refs.map.$mapPromise.then((map) => {
