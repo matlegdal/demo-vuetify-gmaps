@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    sidebarIsOpen: true,
     map: null,
     markers: [{
       id: 1,
@@ -35,7 +36,10 @@ export default new Vuex.Store({
       this.state.map = map;
     },
     addMarker(state, marker) {
-      state.markers.push(marker);
+      this.state.markers.push(marker);
+    },
+    toggleSidebar(state) {
+      this.state.sidebarIsOpen = !state.sidebarIsOpen;
     },
   },
   actions: {

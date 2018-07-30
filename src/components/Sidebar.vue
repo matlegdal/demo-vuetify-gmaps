@@ -1,7 +1,6 @@
 <template>
   <v-navigation-drawer
     :value="sidebarIsOpen"
-    clipped
     persistent
     app
     mobile-break-point="560"
@@ -23,11 +22,10 @@ export default {
   components: {
     'app-add-location': AddLocation,
   },
-  props: {
-    sidebarIsOpen: {
-      type: Boolean,
-      required: true,
-    },
+  computed: {
+    sidebarIsOpen() {
+      return this.$store.state.sidebarIsOpen;
+    }
   },
   methods: {
     ...mapMutations([
@@ -40,5 +38,8 @@ export default {
 <style scoped>
 .sidebar {
   box-shadow: 3px 4px 12px -1px rgba(0, 0, 0, 0.125);
+  height: 100%;
+  padding-top: 64px;
+  max-height: calc(100% - 64px);
 }
 </style>

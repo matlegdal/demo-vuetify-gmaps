@@ -38,24 +38,21 @@ import { gmapApi } from 'vue2-google-maps';
 
 export default {
   name: 'Map',
-  props: {
-    sidebarIsOpen: {
-      type: Boolean,
-      required: true,
-    },
-  },
   computed: {
     google: gmapApi,
     ...mapGetters([
       'map',
       'markers',
     ]),
+    sidebarIsOpen() {
+      return this.$store.state.sidebarIsOpen;
+    },
   },
   mounted() {
     this.$refs.map.$mapPromise.then((map) => {
       this.$store.commit('setMap', map);
-      this.$store.dispatch('addLayer', 'clients');
-      this.$store.dispatch('addLayer', 'stores');
+      // this.$store.dispatch('addLayer', 'clients');
+      // this.$store.dispatch('addLayer', 'stores');
     });
   },
 
@@ -67,6 +64,6 @@ export default {
   height: 100vh;
   position: absolute;
   right: 0;
-  transition: width 0.2s ease-out;
+  transition: width .1s cubic-bezier(.4, 0, .2, 1);
 }
 </style>
